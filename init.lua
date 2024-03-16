@@ -26,9 +26,9 @@ vim.opt.tabstop = 4
 vim.opt.expandtab = true
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
-
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
@@ -42,6 +42,8 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>", { desc = "Open File [E]xplorer" })
+vim.keymap.set("n", "<leader>cc", "<cmd>ChatGPTActAs<CR>", { desc = "Act as [C]hatGPT" })
+vim.keymap.set("n", "<C-c>", "<cmd>ChatGPT<CR>", { desc = "Open [C]hatGPT" })
 
 vim.keymap.set("n", "<leader>gf", "<cmd>Neogit<CR>", { desc = "[G]it [F]iles" })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -61,10 +63,37 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
+		"jackMort/ChatGPT.nvim",
+		event = "VeryLazy",
+		config = function()
+			require("chatgpt").setup({
+				-- predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
+				predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+			"folke/trouble.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+	},
+	{
 		"tpope/vim-sleuth",
 		event = "VeryLazy",
 	},
-
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = {
+					auto_trigger = true,
+				},
+			})
+		end,
+	},
 	{
 		"numToStr/Comment.nvim",
 		opts = {},
@@ -357,6 +386,9 @@ require("lazy").setup({
 		event = "VimEnter",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
+	},
+	{
+		"rcarriga/nvim-notify",
 	},
 	{
 		"folke/noice.nvim",
