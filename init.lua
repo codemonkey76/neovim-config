@@ -60,12 +60,20 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	"tpope/vim-sleuth",
+	{
+		"tpope/vim-sleuth",
+		event = "VeryLazy",
+	},
 
-	{ "numToStr/Comment.nvim", opts = {} },
+	{
+		"numToStr/Comment.nvim",
+		opts = {},
+		event = "VeryLazy",
+	},
 
 	{
 		"lewis6991/gitsigns.nvim",
+		event = "VeryLazy",
 		opts = {
 			signs = {
 				add = { text = "+" },
@@ -159,6 +167,7 @@ require("lazy").setup({
 
 	{
 		"neovim/nvim-lspconfig",
+		event = "VeryLazy",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -250,6 +259,7 @@ require("lazy").setup({
 
 	{
 		"stevearc/conform.nvim",
+		event = "VeryLazy",
 		opts = {
 			notify_on_error = false,
 			format_on_save = function(bufnr)
@@ -378,6 +388,7 @@ require("lazy").setup({
 	},
 	{
 		"smjonas/inc-rename.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("inc_rename").setup()
 		end,
@@ -385,6 +396,7 @@ require("lazy").setup({
 
 	{
 		"NeogitOrg/neogit",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"sindrets/diffview.nvim",
@@ -396,6 +408,7 @@ require("lazy").setup({
 	},
 	{
 		"echasnovski/mini.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("mini.ai").setup({ n_lines = 500 })
 			require("mini.surround").setup()
