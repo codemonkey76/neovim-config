@@ -62,6 +62,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+
 	{
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",
@@ -392,15 +393,21 @@ require("lazy").setup({
 	},
 	{
 		"folke/noice.nvim",
+		-- enabled = false,
 		event = "VeryLazy",
 		opts = {},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
 		},
 		config = function()
 			require("noice").setup({
+				routes = {
+					{
+						view = "notify",
+						filter = { event = "msg_showmode" },
+					},
+				},
 				lsp = {
 					override = {
 						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
