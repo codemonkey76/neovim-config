@@ -62,14 +62,26 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-
+	{
+		"stevearc/oil.nvim",
+		event = "VeryLazy",
+		opts = {},
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function(_, opts)
+			require("oil").setup(opts)
+			vim.keymap.set("n", "<leader>e", "<cmd>Oil --float<CR>", { desc = "Open File [E]xplorer" })
+		end,
+	},
 	{
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",
 		config = function()
 			require("chatgpt").setup({
 				-- predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
-				predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
+				predefined_chat_gpt_prompts =
+				"https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
 			})
 		end,
 		dependencies = {
@@ -145,7 +157,7 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
 		},
 		config = function()
 			require("telescope").setup({
@@ -197,7 +209,6 @@ require("lazy").setup({
 
 	{
 		"neovim/nvim-lspconfig",
-		event = "VeryLazy",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -453,7 +464,6 @@ require("lazy").setup({
 			require("mini.surround").setup()
 			require("mini.animate").setup()
 			require("mini.bracketed").setup()
-			require("mini.files").setup()
 			require("mini.move").setup()
 			require("mini.notify").setup()
 			require("mini.pairs").setup()
