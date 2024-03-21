@@ -63,6 +63,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
+		"christoomey/vim-tmux-navigator",
+	},
+	{
 		"stevearc/oil.nvim",
 		event = "VeryLazy",
 		opts = {},
@@ -80,8 +83,7 @@ require("lazy").setup({
 		config = function()
 			require("chatgpt").setup({
 				-- predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
-				predefined_chat_gpt_prompts =
-				"https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
+				predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
 			})
 		end,
 		dependencies = {
@@ -157,7 +159,7 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
 			require("telescope").setup({
