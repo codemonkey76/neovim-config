@@ -20,7 +20,11 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.lsp.buf_attach_client(0, client)
 	end,
 })
-
+local signs = { Error = " ", Warn = " ", Hint = "󰞋 ", Info = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -99,6 +103,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>e", "<cmd>Oil --float<CR>", { desc = "Open File [E]xplorer" })
 		end,
 	},
+	{
 		"NvChad/nvim-colorizer.lua",
 		opts = {},
 	},
@@ -117,6 +122,16 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"folke/trouble.nvim",
 			"nvim-telescope/telescope.nvim",
+		},
+	},
+	{
+		"folke/trouble.nvim",
+		opts = {
+			use_diagnostic_signs = false,
+		},
+		dependencies = {
+			"folke/lsp-colors.nvim",
+			"nvim-tree/nvim-web-devicons",
 		},
 	},
 	{
