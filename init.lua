@@ -1,4 +1,26 @@
 ---@diagnostic disable: undefined-global
+
+--- Testing lsp
+local client = vim.lsp.start_client({
+	name = "educationalsp",
+	cmd = { "/home/shane/dev/go/educationalsp/main" },
+	on_attach = function()
+		vim.notify("Attached to educational LSP")
+	end,
+})
+
+if not client then
+	vim.notify("Hey, you didn't do the client thing good")
+	return
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.lsp.buf_attach_client(0, client)
+	end,
+})
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -80,8 +102,7 @@ require("lazy").setup({
 		config = function()
 			require("chatgpt").setup({
 				-- predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
-				predefined_chat_gpt_prompts =
-				"https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
+				predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/codemonkey76/better-chat-gpt-prompts/main/prompts.csv",
 			})
 		end,
 		dependencies = {
@@ -157,7 +178,7 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
 			require("telescope").setup({
