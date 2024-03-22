@@ -99,6 +99,10 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>e", "<cmd>Oil --float<CR>", { desc = "Open File [E]xplorer" })
 		end,
 	},
+		"NvChad/nvim-colorizer.lua",
+		opts = {},
+	},
+
 	{
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",
