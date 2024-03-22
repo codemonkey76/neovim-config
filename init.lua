@@ -85,6 +85,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
+		"christoomey/vim-tmux-navigator",
+	},
+	{
 		"stevearc/oil.nvim",
 		event = "VeryLazy",
 		opts = {},
