@@ -1,17 +1,20 @@
 ---@diagnostic disable: undefined-global
 
 --- Testing lsp
-local client = vim.lsp.start_client({
-	name = "educationalsp",
-	cmd = { "/home/shane/dev/go/educationalsp/main" },
-	on_attach = function()
-		vim.notify("Attached to educational LSP")
-	end,
-})
+-- Check if the educationalsp exists first
+if vim.loop.fs_stat("/home/shane/dev/go/educationalsp/main") then
+	local client = vim.lsp.start_client({
+		name = "educationalsp",
+		cmd = { "/home/shane/dev/go/educationalsp/main" },
+		on_attach = function()
+			vim.notify("Attached to educational LSP")
+		end,
+	})
 
-if not client then
-	vim.notify("Hey, you didn't do the client thing good")
-	return
+	if not client then
+		vim.notify("Hey, you didn't do the client thing good")
+		return
+	end
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -282,8 +285,11 @@ require("lazy").setup({
 					map("K", vim.lsp.buf.hover, "Hover Documentation")
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-					local client = vim.lsp.get_client_by_id(event.data.client_id)
-					if client and client.server_capabilities.documentHighlightProvider then
+					local c = vim.lsp.get_client_by_id(event.data.client_id)
+					if c and c.server_capabilities.inlayHintProvider then
+						vim.lsp.inlay_hint.enable(event.buf, true)
+					end
+					if c and c.server_capabilities.documentHighlightProvider then
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							callback = vim.lsp.buf.document_highlight,
@@ -302,14 +308,26 @@ require("lazy").setup({
 
 			local servers = {
 				clangd = {},
-				gopls = {},
+				gopls = {
+					analyses = {
+						unusedparams = true,
+					},
+					staticcheck = true,
+					-- "ui.inlayHint.hints": true
+				},
 				pyright = {},
 				black = {},
 				isort = {},
 				prettierd = {},
 				rust_analyzer = {},
 				intelephense = {},
-				tsserver = {},
+				tsserver = {
+					init_options = {
+						preferences = {
+							includeInlayVariableTypeHints = true,
+						},
+					},
+				},
 				lua_ls = {
 					settings = {
 						Lua = {
