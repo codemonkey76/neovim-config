@@ -16,6 +16,7 @@ require('lazy').setup({
   require 'plugins.treesitter',
   require 'plugins.lualine',
   require 'plugins.chatgpt',
+  require 'plugins.tailwind',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
