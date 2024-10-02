@@ -1,0 +1,37 @@
+require('lazy').setup({
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'EmranMR/tree-sitter-blade',
+  require 'plugins.barbar',
+  require 'plugins.oil',
+  require 'plugins.gitsigns',
+  require 'plugins.which-key',
+  require 'plugins.telescope',
+  require 'plugins.lazydev',
+  { 'Bilal2453/luvit-meta', lazy = true },
+  require 'plugins.lspconfig',
+  require 'plugins.conform',
+  require 'plugins.cmp',
+  require 'plugins.colorscheme',
+  require 'plugins.todo-comments',
+  require 'plugins.treesitter',
+  require 'plugins.lualine',
+  require 'plugins.chatgpt',
+}, {
+  ui = {
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+  },
+})
